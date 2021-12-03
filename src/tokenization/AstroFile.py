@@ -2,9 +2,7 @@
 # - Official Astro Source Code -
 # (\sa: https://github.com/xyLotus/Astro/blob/master/src/compiler/astro_file.py)
 # ===================================
-# -*- coding: utf-8 -*-
-# ===================================
-"""Contains file handle benificially designed for Astro."""
+'''Contains file handle beneficially designed for Astro.'''
 # ===================================
 # Dunder Credentials
 # ===================================
@@ -14,7 +12,6 @@ __version__ = '0.0.5'
 # Imports
 # ===================================
 import re
-import tokenization.Tokenizer
 
 
 class AstroFile:

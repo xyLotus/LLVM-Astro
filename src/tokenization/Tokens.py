@@ -2,8 +2,6 @@
 # - Official Astro Source Code -
 # (\sa: https://github.com/xyLotus/Astro/blob/master/src/compiler/astro_types.py)
 # ===================================
-# -*- coding: utf-8 -*-
-# ===================================
 """Contains the Astro token types and the
 associated wrapper class for efficient use."""
 # ===================================
@@ -41,6 +39,9 @@ class TokenType:
     NONE    = 17  # placeholders
     QUOTE   = 18  # '
     DBQUOTE = 19  # "
+
+    NUMBER  = 20  # [0-9]
+    EOF     = 21
 
     @staticmethod
     def get(id_) -> str:

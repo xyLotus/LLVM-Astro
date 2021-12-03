@@ -2,10 +2,8 @@
 # - Official Astro Source Code -
 # (\sa: https://github.com/xyLotus/Astro/blob/master/src/compiler/tokenizer.py)
 # ===================================
-# -*- coding: utf-8 -*-
-# ===================================
-"""Contains the lexer that returns the tokens 
-for each line in the passed file @class Lexer."""
+'''Contains the lexer that returns the tokens 
+for each line in the passed file @class Lexer.'''
 # ===================================
 # Dunder Credentials
 # ===================================
@@ -16,6 +14,8 @@ __version__ = '0.1.0'
 # ===================================
 from tokenization.Tokens import Token, TokenType
 from tokenization.AstroFile import AstroFile 
+from typing import List
+import re
 
 
 class Tokenizer:
@@ -80,8 +80,11 @@ class Tokenizer:
 
         for line in self.content.split('\n'):
             line_buffer = []
-            for ch in line:
-                typ = type_map.get(ch, TokenType.SYM)
+            for i, ch in enumerate(line):
+                # TokenType is NUMBER if not connected to SYM before
+                typ = TokenType.NUMBER  if str(ch).isnumeric() \
+                                        and not line[i-1].isalpha() \
+                                        else type_map.get(ch, TokenType.SYM)
                 line_buffer.append(Token(typ, ch))
             toks.append(line_buffer)
 
@@ -136,3 +139,8 @@ class Tokenizer:
             toks.append(line_buf)
 
         return toks
+
+        # NOTE -> Past me, I really don't like the fact that you forgot to COMMENT on this,
+        #         I'm sitting here, confused as fuck, trying to understand this code,
+        #         yet all I understand is... about nothing. The code styling doesn't look
+        #         bad as well as the code itself I suppose, but fuck man, at least tell me whats going on...

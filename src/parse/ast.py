@@ -1,9 +1,7 @@
 # ===================================
 # - Official Astro Source Code -
 # ===================================
-# -*- coding: utf-8 -*-
-# ===================================
-"""Contains the Astro Abstract Syntax Tree (AAST/AST) hierarchy."""
+'''Contains the Astro Abstract Syntax Tree (AAST/AST) hierarchy.'''
 # ===================================
 # Dunder Credentials
 # ===================================
@@ -15,16 +13,17 @@ __version__ = '.'
 from abc import ABC
 
 
-# Base Class
+#! Base Class
 class ExprAST(ABC):
     '''The abstract base class inheriting into all
     expressionistic AST subclasses.'''
-    pass
-
+    def __str__(self):
+        class_name = str(ExprAST.__dict__['__dict__']).split(' ')[3].replace('\'', '')
+        return f'{class_name}()'
 
 class VarExprAST(ExprAST):
     '''A expression subclass for referencing variable names.'''
-    def __init__(self, value: str):
+    def __init__(self, value: str):  
         self.value = value 
 
 
@@ -66,3 +65,4 @@ class FuncExprAST(ExprAST):
         # Declaration may not be seperate
         self.declaration = declaration 
         self.content = content
+
