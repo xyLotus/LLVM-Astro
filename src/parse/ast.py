@@ -10,21 +10,19 @@ __version__ = '.'
 # ===================================
 # Imports
 # ===================================
-from abc import ABC
+from utils import ClassUtils
 
 
 #! Base Class
-class ExprAST(ABC):
+class ExprAST(ClassUtils):
     '''The abstract base class inheriting into all
     expressionistic AST subclasses.'''
-    def __str__(self):
-        class_name = str(ExprAST.__dict__['__dict__']).split(' ')[3].replace('\'', '')
-        return f'{class_name}()'
+    pass
 
 class VarExprAST(ExprAST):
     '''A expression subclass for referencing variable names.'''
     def __init__(self, value: str):  
-        self.value = value 
+        self.value = value
 
 
 class NumExprAST(ExprAST):

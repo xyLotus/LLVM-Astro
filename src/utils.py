@@ -10,6 +10,7 @@ __author__  = 'xyLotus'
 # Imports
 # ===================================
 from typing import Any, AnyStr
+import inspect
 import sys
 
 try:
@@ -18,10 +19,9 @@ try:
 except ImportError as e:
     print(f'[utils] - {e}')
     exit(1)
-# ===================================
 
 
-# Yeah, yeah I know it's code that get's auto-run upon importing,
+# Yeah, yeah I know it's code that gets auto-run upon importing,
 # but I have better things to do, so I'm just gonna leave this here. Bye.
 if sys.platform == 'win32':
         colorama.init()
@@ -70,6 +70,44 @@ def colored_out(text_format, *args):
     from @class ColoredText.'''
     try:
         print(text_format(*args))
+        if text_format == ColorFormat.src_error or \
+           text_format == ColorFormat.error:
+            exit(1)
     except TypeError as e:
         print(ColorFormat.src_error('utils.py@colored_out', e))
         exit(1)
+
+
+class ClassUtils:
+    '''Automatically inherits a auto-adjusting __str__ and __repr__ method.'''
+    def __str__(self):
+        '''Uses reflection (__dict__) attribute to return the class name and
+        inspect to get the class parameters.'''
+        class_name = self.__class__.__name__
+        class_args = inspect.signature(self.__init__)
+        return f'{class_name}{class_args}'
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class LogOutput:
+    '''Manages Log output with a level-based importance system.
+    Note: Intended level use => The lower the level (1 being the lowest),
+          the higher the priority of it. Can also be a list for multiple levels
+          of output.'''
+    def __init__(self, levels: list):
+        '''Parameters:
+        @level: Dev-mutable level of output importance.
+                All func calls with given level will output.'''
+        self.levels = levels
+
+    def src_log(self, lvl: int, src: str, msg: str):
+        '''ColorFormat.src_log wrapper with level importance sys implemented.'''
+        if lvl in self.levels:
+            print(f'{Fore.CYAN}[{src}-Log]{Fore.WHITE} - {msg}{Style.RESET_ALL}')
+
+    def log(self, lvl: int, msg: str):
+        '''ColorFormat.log wrapper with level importance sys implemented.'''
+        if lvl in self.levels:
+            print(f'{Fore.CYAN}[Log]{Fore.WHITE} - {msg}{Style.RESET_ALL}')

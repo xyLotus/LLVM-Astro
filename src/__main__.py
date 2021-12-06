@@ -31,19 +31,8 @@ def main():
     asxout(Coloring.src_log, 'Tokenizer', 'Tokenization finished.\n')
 
     # Parsing with the AST
-    parser = Parser(tokens)
-    token_buffer = Token()
-    while token_buffer.id != TokenType.EOF:
-        token_buffer = parser.get_next_token()
-    
-    print()
-    asxout(Coloring.src_log, 'Parser', 'End of file reached.')
-
-    print(parser.cur_tok)
-    print(NumExprAST.__dict__)
-    expr = parser.parse_expr()
-    print(expr)
-
+    parser = Parser(tokens, remove_spaces=True, log_levels=[2])
+    parser.parse()
 
 if __name__ == '__main__':
     main()

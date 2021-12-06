@@ -10,6 +10,7 @@ associated wrapper class for efficient use."""
 __author__  = 'xyLotus, bellrise'
 __version__ = '0.1'
 # ===================================
+from typing import List
 
 
 class TokenType:
@@ -41,7 +42,8 @@ class TokenType:
     DBQUOTE = 19  # "
 
     NUMBER  = 20  # [0-9]
-    EOF     = 21
+
+    EOF     = 23
 
     @staticmethod
     def get(id_) -> str:
@@ -77,3 +79,15 @@ class Token:
         """Generate a string representation of the Token using some reflective
         Python magic. """
         return self.__str__()
+
+
+def remove_tokens(token_input: List[Token], token_id):
+    '''Removes all tokens with given token id from the token_input & returns.
+    Then returns the new List[Token]. Note: Function assumes that token_input
+    is format: List[Token].'''
+    new_list = []
+    for i, token in enumerate(token_input):
+        if token.id != token_id:
+            new_list.append(token_input[i])
+
+    return new_list
